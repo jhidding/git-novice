@@ -3,7 +3,6 @@ title: Exploring History
 teaching: 25
 exercises: 0
 ---
-
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 - Explain what the HEAD of a repository is and how to use it.
@@ -30,8 +29,8 @@ progress by looking, so let's do that using our `HEAD`s.  Before we start,
 let's make a change to `mars.txt`, adding yet another line.
 
 ```bash
-$ nano mars.txt
-$ cat mars.txt
+nano mars.txt
+cat mars.txt
 ```
 
 ```output
@@ -44,7 +43,7 @@ An ill-considered change
 Now, let's see what we get.
 
 ```bash
-$ git diff HEAD mars.txt
+git diff HEAD mars.txt
 ```
 
 ```output
@@ -66,14 +65,14 @@ that by adding `~1`
 to refer to the commit one before `HEAD`.
 
 ```bash
-$ git diff HEAD~1 mars.txt
+git diff HEAD~1 mars.txt
 ```
 
 If we want to see the differences between older commits we can use `git diff`
 again, but with the notation `HEAD~1`, `HEAD~2`, and so on, to refer to them:
 
 ```bash
-$ git diff HEAD~3 mars.txt
+git diff HEAD~3 mars.txt
 ```
 
 ```output
@@ -93,7 +92,7 @@ well as the commit message, rather than the *differences* between a commit and o
 working directory that we see by using `git diff`.
 
 ```bash
-$ git show HEAD~3 mars.txt
+git show HEAD~3 mars.txt
 ```
 
 ```output
@@ -132,7 +131,7 @@ Our first commit was given the ID
 so let's try this:
 
 ```bash
-$ git diff f22b25e3233b4645dabd0d81e651fe074bd8e73b mars.txt
+git diff f22b25e3233b4645dabd0d81e651fe074bd8e73b mars.txt
 ```
 
 ```output
@@ -152,7 +151,7 @@ but typing out random 40-character strings is annoying,
 so Git lets us use just the first few characters (typically seven for normal size projects):
 
 ```bash
-$ git diff f22b25e mars.txt
+git diff f22b25e mars.txt
 ```
 
 ```output
@@ -177,7 +176,7 @@ Let's suppose we change our mind about the last update to
 but those changes haven't been staged:
 
 ```bash
-$ git status
+git status
 ```
 
 ```output
@@ -192,11 +191,11 @@ no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
 We can put things back the way they were
-by using `git checkout`:
+by using `git restore`:
 
 ```bash
-$ git checkout HEAD mars.txt
-$ cat mars.txt
+git restore HEAD mars.txt
+cat mars.txt
 ```
 
 ```output
@@ -206,7 +205,7 @@ But the Mummy will appreciate the lack of humidity
 ```
 
 As you might guess from its name,
-`git checkout` checks out (i.e., restores) an old version of a file.
+`git restore` restores an old version of a file.
 In this case,
 we're telling Git that we want to recover the version of the file recorded in `HEAD`,
 which is the last saved commit.
@@ -214,11 +213,11 @@ If we want to go back even further,
 we can use a commit identifier instead:
 
 ```bash
-$ git checkout f22b25e mars.txt
+git restore f22b25e mars.txt
 ```
 
 ```bash
-$ cat mars.txt
+cat mars.txt
 ```
 
 ```output
@@ -226,7 +225,7 @@ Cold and dry, but everything is my favorite color
 ```
 
 ```bash
-$ git status
+git status
 ```
 
 ```output
@@ -240,20 +239,22 @@ Changes to be committed:
 
 Notice that the changes are currently in the staging area.
 Again, we can put things back the way they were
-by using `git checkout`:
+by using `git restore`:
 
 ```bash
-$ git checkout HEAD mars.txt
+git restore HEAD mars.txt
 ```
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
 ## Don't Lose Your HEAD
 
+FIXME: not needed when using `git restore`?
+
 Above we used
 
 ```bash
-$ git checkout f22b25e mars.txt
+git checkout f22b25e mars.txt
 ```
 
 to revert `mars.txt` to its state after the commit `f22b25e`. But be careful!
@@ -262,7 +263,7 @@ your intentions if you are not accurate with the typing. For example,
 if you forget `mars.txt` in the previous command.
 
 ```bash
-$ git checkout f22b25e
+git checkout f22b25e
 ```
 
 ```error
@@ -282,8 +283,7 @@ HEAD is now at f22b25e Start notes on Mars as a base
 
 The "detached HEAD" is like "look, but don't touch" here,
 so you shouldn't make any changes in this state.
-After investigating your repo's past state, reattach your `HEAD` with `git checkout main`.
-
+After investigating your repo's past state, reattach your `HEAD` with `git switch main`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -310,16 +310,15 @@ If you read the output of `git status` carefully,
 you'll see that it includes this hint:
 
 ```output
-(use "git checkout -- <file>..." to discard changes in working directory)
+(use "git restore -- <file>..." to discard changes in working directory)
 ```
 
 As it says,
-`git checkout` without a version identifier restores files to the state saved in `HEAD`.
+`git restore` without a version identifier restores files to the state saved in `HEAD`.
 The double dash `--` is needed to separate the names of the files being recovered
 from the command itself:
 without it,
 Git would try to use the name of the file as the commit identifier.
-
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -346,11 +345,11 @@ let her recover the last committed version of her Python script called
 
 1. `$ git checkout HEAD`
 
-2. `$ git checkout HEAD data_cruncher.py`
+2. `$ git restore data_cruncher.py`
 
-3. `$ git checkout HEAD~1 data_cruncher.py`
+3. `$ git restore HEAD~1 data_cruncher.py`
 
-4. `$ git checkout <unique ID of last commit> data_cruncher.py`
+4. `$ git restore <unique ID of last commit> data_cruncher.py`
 
 5. Both 2 and 4
 
@@ -360,7 +359,7 @@ let her recover the last committed version of her Python script called
 
 The answer is (5)-Both 2 and 4.
 
-The `checkout` command restores files from the repository, overwriting the files in your working
+The `restore` command restores files from the repository, overwriting the files in your working
 directory. Answers 2 and 4 both restore the *latest* version *in the repository* of the file
 `data_cruncher.py`. Answer 2 uses `HEAD` to indicate the *latest*, whereas answer 4 uses the
 unique ID of the last commit, which is what `HEAD` means.
@@ -374,8 +373,6 @@ This command will restore `data_cruncher.py` to the latest commit version, but i
 restore *any other files that are changed* to that version, erasing any changes you may
 have made to those files!
 As discussed above, you are left in a *detached* `HEAD` state, and you don't want to be there.
-
-
 
 :::::::::::::::::::::::::
 
@@ -419,8 +416,6 @@ The command `git show HEAD` shows changes made at the latest commit, and lists
 the commit ID; however, Jennifer should double-check it is the correct commit, and no one
 else has committed changes to the repository.
 
-
-
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -432,24 +427,29 @@ else has committed changes to the repository.
 What is the output of the last command in
 
 ```bash
-$ cd planets
-$ echo "Venus is beautiful and full of love" > venus.txt
-$ git add venus.txt
-$ echo "Venus is too hot to be suitable as a base" >> venus.txt
-$ git commit -m "Comment on Venus as an unsuitable base"
-$ git checkout HEAD venus.txt
-$ cat venus.txt #this will print the contents of venus.txt to the screen
+cd planets
+echo "Venus is beautiful and full of love" > venus.txt
+git add venus.txt
+echo "Venus is too hot to be suitable as a base" >> venus.txt
+git commit -m "Comment on Venus as an unsuitable base"
+git restore venus.txt
+cat venus.txt #this will print the contents of venus.txt to the screen
 ```
 
 1. ```output
+
   Venus is too hot to be suitable as a base
+
   ```
 2. ```output
   Venus is beautiful and full of love
   ```
+
 3. ```output
+
   Venus is beautiful and full of love
   Venus is too hot to be suitable as a base
+
   ```
 4. ```output
   Error because you have changed venus.txt without committing the changes
@@ -470,7 +470,7 @@ the version of `venus.txt` committed to the repository is the one from the stagi
 has only one line.
 
 At this time, the working copy still has the second line (and
-`git status` will show that the file is modified). However, `git checkout HEAD venus.txt`
+`git status` will show that the file is modified). However, `git restore venus.txt`
 replaces the working copy with the most recently committed version of `venus.txt`.
 
 So, `cat venus.txt` will output
@@ -494,23 +494,22 @@ Try another command, `git diff [ID] mars.txt`, where [ID] is replaced with
 the unique identifier for your most recent commit. What do you think will happen,
 and what does happen?
 
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Getting Rid of Staged Changes
 
-`git checkout` can be used to restore a previous commit when unstaged changes have
+`git restore` can be used to restore a previous commit when unstaged changes have
 been made, but will it also work for changes that have been staged but not committed?
 Make a change to `mars.txt`, add that change using `git add`,
-then use `git checkout` to see if you can remove your change.
+then use `git restore` to see if you can remove your change.
 
 :::::::::::::::  solution
 
 ## Solution
 
-After adding a change, `git checkout` can not be used directly.
+After adding a change, `git restore` can not be used directly.
 Let's look at the output of `git status`:
 
 ```output
@@ -526,24 +525,24 @@ Note that if you don't have the same output
 you may either have forgotten to change the file,
 or you have added it *and* committed it.
 
-Using the command `git checkout -- mars.txt` now does not give an error,
+Using the command `git restore -- mars.txt` now does not give an error,
 but it does not restore the file either.
 Git helpfully tells us that we need to use `git reset` first
 to unstage the file:
 
 ```bash
-$ git reset HEAD mars.txt
+git reset HEAD mars.txt
 ```
 
 ```output
 Unstaged changes after reset:
-M	mars.txt
+M mars.txt
 ```
 
 Now, `git status` gives us:
 
 ```bash
-$ git status
+git status
 ```
 
 ```output
@@ -561,8 +560,8 @@ This means we can now use `git checkout` to restore the file
 to the previous commit:
 
 ```bash
-$ git checkout -- mars.txt
-$ git status
+git restore -- mars.txt
+git status
 ```
 
 ```output
@@ -590,7 +589,7 @@ Recall that the `git diff` command allows us to explore one specific file,
 e.g., `git diff mars.txt`. We can apply a similar idea here.
 
 ```bash
-$ git log mars.txt
+git log mars.txt
 ```
 
 Unfortunately some of these commit messages are very ambiguous, e.g., `update files`.
@@ -601,7 +600,7 @@ for you.
 Is it possible to combine both? Let's try the following:
 
 ```bash
-$ git log --patch mars.txt
+git log --patch mars.txt
 ```
 
 You should get a long list of output, and you should be able to see both commit messages and
@@ -610,7 +609,7 @@ the difference between each commit.
 Question: What does the following command do?
 
 ```bash
-$ git log --patch HEAD~9 *.txt
+git log --patch HEAD~9 *.txt
 ```
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -618,8 +617,7 @@ $ git log --patch HEAD~9 *.txt
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
 - `git diff` displays differences between commits.
-- `git checkout` recovers old versions of files.
+- `git restore` recovers old versions of files.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
 

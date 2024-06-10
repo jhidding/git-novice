@@ -1,7 +1,6 @@
 ---
 title: Discussion
 ---
-
 ## Frequently Asked Questions
 
 People often have questions about Git beyond the scope of the core material.
@@ -17,17 +16,17 @@ It turns out that these configuration options get stored in your home directory
 in a plain text file called `.gitconfig`.
 
 ```bash
-$ cat ~/.gitconfig
+cat ~/.gitconfig
 ```
 
 ```output
 [user]
-	name = Vlad Dracula
-	email = vlad@tran.sylvan.ia
+ name = Vlad Dracula
+ email = vlad@tran.sylvan.ia
 [color]
-	ui = true
+ ui = true
 [core]
-	editor = nano
+ editor = nano
 ```
 
 This file can be opened in your preferred text editor.
@@ -39,7 +38,7 @@ This can be done by adding more entries to your `.gitconfig`.
 The available options are described in the manual:
 
 ```bash
-$ git config --help
+git config --help
 ```
 
 In particular, you might find it useful to add aliases.
@@ -48,19 +47,19 @@ For example, if you get sick of typing `git checkout` all the time,
 you could run the command:
 
 ```bash
-$ git config --global alias.co checkout
+git config --global alias.co checkout
 ```
 
 Now if we return to the example from [Exploring History](../episodes/05-history.md) where we ran:
 
 ```bash
-$ git checkout f22b25e mars.txt
+git checkout f22b25e mars.txt
 ```
 
 we could now instead type:
 
 ```bash
-$ git co f22b25e mars.txt
+git co f22b25e mars.txt
 ```
 
 ## Styling Git's Log
@@ -75,19 +74,19 @@ the log output.
 Try the following commands and see what effect they have:
 
 ```bash
-$ git config --global alias.lg "log --graph"
-$ git config --global log.abbrevCommit true
-$ git config --global format.pretty oneline
-$ git lg
+git config --global alias.lg "log --graph"
+git config --global log.abbrevCommit true
+git config --global format.pretty oneline
+git lg
 ```
 
 If you don't like the effects,
 you can undo them with:
 
 ```bash
-$ git config --global --unset alias.lg
-$ git config --global --unset log.abbrevCommit
-$ git config --global --unset format.pretty
+git config --global --unset alias.lg
+git config --global --unset log.abbrevCommit
+git config --global --unset format.pretty
 ```
 
 :::::::::::::::::::::::::::::::::::::::::  callout
@@ -104,7 +103,6 @@ their own Git configuration files.
 Sort them by the number of stars and have a look at the top few.
 If you find some you like,
 please check that they're covered by an open source license before you clone them.
-
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -137,8 +135,8 @@ using outputs from a word processor instead of plain text.
 Create a new directory and go into it:
 
 ```bash
-$ mkdir planets-nontext
-$ cd planets-nontext
+mkdir planets-nontext
+cd planets-nontext
 ```
 
 Use a program such as Microsoft Word or LibreOffice Writer to create a new document.
@@ -152,9 +150,9 @@ Save the document into the `planets-nontext` directory with the name of `mars.do
 Back in the terminal, run the usual commands for setting up a new Git repository:
 
 ```bash
-$ git init
-$ git add mars.doc
-$ git commit -m "Starting to think about Mars"
+git init
+git add mars.doc
+git commit -m "Starting to think about Mars"
 ```
 
 Then make the same changes to `mars.doc` that we (or Vlad) previously made to `mars.txt`.
@@ -168,7 +166,7 @@ Save and close the word processor.
 Now see what Git thinks of your changes:
 
 ```bash
-$ git diff
+git diff
 ```
 
 ```output
@@ -215,15 +213,15 @@ from the repository.
 Create a new file for the planet Nibiru:
 
 ```bash
-$ echo "This is another name for fake planet X" > nibiru.txt
+echo "This is another name for fake planet X" > nibiru.txt
 ```
 
 Now add to the repository like you have learned earlier:
 
 ```bash
-$ git add nibiru.txt
-$ git commit -m 'adding info on nibiru'
-$ git status
+git add nibiru.txt
+git commit -m 'adding info on nibiru'
+git status
 ```
 
 ```output
@@ -235,8 +233,8 @@ Nibiru is not a real planet.  That was a silly idea.  Let us remove
 it from the disk and let Git know about it:
 
 ```bash
-$ git rm nibiru.txt
-$ git status
+git rm nibiru.txt
+git status
 ```
 
 ```output
@@ -254,7 +252,7 @@ in the new commit.  The previous commit will still
 have the file, if you were to retrieve that specific commit.
 
 ```bash
-$ git commit -m 'Removing info on Nibiru.  It is not a real planet!'
+git commit -m 'Removing info on Nibiru.  It is not a real planet!'
 ```
 
 ## Removing a File with Unix
@@ -265,16 +263,16 @@ Git is smart enough to notice the missing file. Let us recreate the file and
 commit it again.
 
 ```bash
-$ echo "This is another name for fake planet X" > nibiru.txt
-$ git add nibiru.txt
-$ git commit -m 'adding nibiru again'
+echo "This is another name for fake planet X" > nibiru.txt
+git add nibiru.txt
+git commit -m 'adding nibiru again'
 ```
 
 Now we remove the file with Unix `rm`:
 
 ```bash
-$ rm nibiru.txt
-$ git status
+rm nibiru.txt
+git status
 ```
 
 ```output
@@ -294,8 +292,8 @@ from the repository.  This is done with the command `git rm` just as
 before.
 
 ```bash
-$ git rm nibiru.txt
-$ git status
+git rm nibiru.txt
+git status
 ```
 
 ```output
@@ -311,7 +309,7 @@ The change that was made in Unix has now been staged and needs to be
 committed.
 
 ```bash
-$ git commit -m 'Removing info on Nibiru, again!'
+git commit -m 'Removing info on Nibiru, again!'
 ```
 
 ## Renaming a File
@@ -321,14 +319,14 @@ Another common change when working on a project is to rename a file.
 Create a file for the planet Krypton:
 
 ```bash
-$ echo "Superman's home planet" > krypton.txt
+echo "Superman's home planet" > krypton.txt
 ```
 
 Add it to the repository:
 
 ```bash
-$ git add krypton.txt
-$ git commit -m 'Adding planet Krypton'
+git add krypton.txt
+git commit -m 'Adding planet Krypton'
 ```
 
 We all know that Superman moved to Earth.  Not that he had much
@@ -337,8 +335,8 @@ choice.  Now his home planet is Earth.
 Rename the file `krypton.txt` to `earth.txt` with Git:
 
 ```bash
-$ git mv krypton.txt earth.txt
-$ git status
+git mv krypton.txt earth.txt
+git status
 ```
 
 ```output
@@ -346,13 +344,13 @@ On branch main
 Changes to be committed:
   (use "git reset HEAD <file>..." to unstage)
 
-	renamed:    krypton.txt -> earth.txt
+ renamed:    krypton.txt -> earth.txt
 ```
 
 The final step is commit our change to the repository:
 
 ```bash
-$ git commit -m 'Superman's home is now Earth'
+git commit -m 'Superman's home is now Earth'
 ```
 
 ## Renaming a File with Unix
@@ -364,16 +362,16 @@ this time with Unix `mv`. First, we need to recreate the
 `krypton.txt` file:
 
 ```bash
-$ echo "Superman's home planet" > krypton.txt
-$ git add krypton.txt
-$ git commit -m 'Adding planet Krypton again.'
+echo "Superman's home planet" > krypton.txt
+git add krypton.txt
+git commit -m 'Adding planet Krypton again.'
 ```
 
 Let us rename the file and see what Git can figured out by itself:
 
 ```bash
-$ mv krypton.txt earth.txt
-$ git status
+mv krypton.txt earth.txt
+git status
 ```
 
 ```output
@@ -398,8 +396,8 @@ file system and a new file `earth.txt` has showed up.
 Add those changes to the staging area:
 
 ```bash
-$ git add krypton.txt earth.txt
-$ git status
+git add krypton.txt earth.txt
+git status
 ```
 
 ```output
@@ -417,7 +415,7 @@ disappeared - it has simply been renamed.
 The final step, as before, is to commit our change to the repository:
 
 ```bash
-$ git commit -m 'Superman's home is Earth, told you before.'
+git commit -m 'Superman's home is Earth, told you before.'
 ```
 
 ## Further .gitignore concepts
@@ -472,5 +470,4 @@ results/*             # ignore the files in the results directory
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
 

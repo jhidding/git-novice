@@ -3,7 +3,6 @@ title: Creating a Repository
 teaching: 10
 exercises: 0
 ---
-
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 - Create a local Git repository.
@@ -40,16 +39,16 @@ Courtesy NASA/JPL-Caltech.
 First, let's create a new directory in the `Desktop` folder for our work and then change the current working directory to the newly created one:
 
 ```bash
-$ cd ~/Desktop
-$ mkdir planets
-$ cd planets
+cd ~/Desktop
+mkdir planets
+cd planets
 ```
 
 Then we tell Git to make `planets` a [repository](../learners/reference.md#repository)
 \-- a place where Git can store versions of our files:
 
 ```bash
-$ git init
+git init
 ```
 
 It is important to note that `git init` will create a repository that
@@ -63,18 +62,18 @@ If we use `ls` to show the directory's contents,
 it appears that nothing has changed:
 
 ```bash
-$ ls
+ls
 ```
 
 But if we add the `-a` flag to show everything,
 we can see that Git has created a hidden directory within `planets` called `.git`:
 
 ```bash
-$ ls -a
+ls -a
 ```
 
 ```output
-.	..	.git
+. .. .git
 ```
 
 Git uses this special subdirectory to store all the information about the project,
@@ -88,7 +87,7 @@ of git.
 See the [setup episode](02-setup.md#default-git-branch-naming) for more information on this change.
 
 ```bash
-$ git checkout -b main
+git switch -c main
 ```
 
 ```output
@@ -99,7 +98,7 @@ We can check that everything is set up correctly
 by asking Git to tell us the status of our project:
 
 ```bash
-$ git status
+git status
 ```
 
 ```output
@@ -123,13 +122,13 @@ Despite Wolfman's concerns, Dracula creates a `moons` project inside his `planet
 project with the following sequence of commands:
 
 ```bash
-$ cd ~/Desktop   # return to Desktop directory
-$ cd planets     # go into planets directory, which is already a Git repository
-$ ls -a          # ensure the .git subdirectory is still present in the planets directory
-$ mkdir moons    # make a subdirectory planets/moons
-$ cd moons       # go into moons subdirectory
-$ git init       # make the moons subdirectory a Git repository
-$ ls -a          # ensure the .git subdirectory is present indicating we have created a new Git repository
+cd ~/Desktop   # return to Desktop directory
+cd planets     # go into planets directory, which is already a Git repository
+ls -a          # ensure the .git subdirectory is still present in the planets directory
+mkdir moons    # make a subdirectory planets/moons
+cd moons       # go into moons subdirectory
+git init       # make the moons subdirectory a Git repository
+ls -a          # ensure the .git subdirectory is present indicating we have created a new Git repository
 ```
 
 Is the `git init` command, run inside the `moons` subdirectory, required for
@@ -154,7 +153,7 @@ like the following, you are good to go to create a new repository as shown
 above:
 
 ```bash
-$ git status
+git status
 ```
 
 ```output
@@ -171,7 +170,7 @@ his last `git init` in the `moons` subdirectory?
 
 :::::::::::::::  solution
 
-## Solution -- USE WITH CAUTION!
+## Solution -- USE WITH CAUTION
 
 ### Background
 
@@ -180,7 +179,7 @@ yet how to tell Git to track a particular file; we will learn this in the next e
 that are not tracked by Git can easily be removed like any other "ordinary" files with
 
 ```bash
-$ rm filename
+rm filename
 ```
 
 Similarly a directory can be removed using `rm -r dirname` or `rm -rf dirname`.
@@ -194,14 +193,12 @@ To recover from this little mistake, Dracula can just remove the `.git`
 folder in the moons subdirectory by running the following command from inside the `planets` directory:
 
 ```bash
-$ rm -rf moons/.git
+rm -rf moons/.git
 ```
 
 But be careful! Running this command in the wrong directory will remove
 the entire Git history of a project you might want to keep.
 Therefore, always check your current directory using the command `pwd`.
-
-
 
 :::::::::::::::::::::::::
 
@@ -213,5 +210,4 @@ Therefore, always check your current directory using the command `pwd`.
 - Git stores all of its repository data in the `.git` directory.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
 

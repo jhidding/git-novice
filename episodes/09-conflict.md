@@ -3,7 +3,6 @@ title: Conflicts
 teaching: 15
 exercises: 0
 ---
-
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 - Explain what conflicts are and when they can occur.
@@ -29,7 +28,7 @@ To see how we can resolve conflicts, we must first create one.  The file
 repository:
 
 ```bash
-$ cat mars.txt
+cat mars.txt
 ```
 
 ```output
@@ -41,8 +40,8 @@ But the Mummy will appreciate the lack of humidity
 Let's add a line to the collaborator's copy only:
 
 ```bash
-$ nano mars.txt
-$ cat mars.txt
+nano mars.txt
+cat mars.txt
 ```
 
 ```output
@@ -55,8 +54,8 @@ This line added to Wolfman's copy
 and then push the change to GitHub:
 
 ```bash
-$ git add mars.txt
-$ git commit -m "Add a line in our home copy"
+git add mars.txt
+git commit -m "Add a line in our home copy"
 ```
 
 ```output
@@ -65,7 +64,7 @@ $ git commit -m "Add a line in our home copy"
 ```
 
 ```bash
-$ git push origin main
+git push origin main
 ```
 
 ```output
@@ -85,8 +84,8 @@ make a different change to their copy
 *without* updating from GitHub:
 
 ```bash
-$ nano mars.txt
-$ cat mars.txt
+nano mars.txt
+cat mars.txt
 ```
 
 ```output
@@ -99,8 +98,8 @@ We added a different line in the other copy
 We can commit the change locally:
 
 ```bash
-$ git add mars.txt
-$ git commit -m "Add a line in my copy"
+git add mars.txt
+git commit -m "Add a line in my copy"
 ```
 
 ```output
@@ -111,7 +110,7 @@ $ git commit -m "Add a line in my copy"
 but Git won't let us push it to GitHub:
 
 ```bash
-$ git push origin main
+git push origin main
 ```
 
 ```output
@@ -134,7 +133,7 @@ What we have to do is pull the changes from GitHub,
 Let's start by pulling:
 
 ```bash
-$ git pull origin main
+git pull origin main
 ```
 
 ```output
@@ -159,7 +158,7 @@ stop us from trampling on our previous work. The conflict is marked in
 in the affected file:
 
 ```bash
-$ cat mars.txt
+cat mars.txt
 ```
 
 ```output
@@ -187,7 +186,7 @@ or get rid of the change entirely.
 Let's replace both so that the file looks like this:
 
 ```bash
-$ cat mars.txt
+cat mars.txt
 ```
 
 ```output
@@ -202,8 +201,8 @@ we add `mars.txt` to the changes being made by the merge
 and then commit:
 
 ```bash
-$ git add mars.txt
-$ git status
+git add mars.txt
+git status
 ```
 
 ```output
@@ -213,12 +212,12 @@ All conflicts fixed but you are still merging.
 
 Changes to be committed:
 
-	modified:   mars.txt
+ modified:   mars.txt
 
 ```
 
 ```bash
-$ git commit -m "Merge changes from GitHub"
+git commit -m "Merge changes from GitHub"
 ```
 
 ```output
@@ -228,7 +227,7 @@ $ git commit -m "Merge changes from GitHub"
 Now we can push our changes to GitHub:
 
 ```bash
-$ git push origin main
+git push origin main
 ```
 
 ```output
@@ -248,7 +247,7 @@ so we don't have to fix things by hand again
 when the collaborator who made the first change pulls again:
 
 ```bash
-$ git pull origin main
+git pull origin main
 ```
 
 ```output
@@ -269,7 +268,7 @@ Fast-forward
 We get the merged file:
 
 ```bash
-$ cat mars.txt
+cat mars.txt
 ```
 
 ```output
@@ -313,7 +312,6 @@ When asked by your instructor,
 pull her changes from the repository to create a conflict,
 then resolve it.
 
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -335,8 +333,8 @@ If you do not have an image file of Mars available, you can create
 a dummy binary file like this:
 
 ```bash
-$ head -c 1024 /dev/urandom > mars.jpg
-$ ls -lh mars.jpg
+head -c 1024 /dev/urandom > mars.jpg
+ls -lh mars.jpg
 ```
 
 ```output
@@ -349,8 +347,8 @@ random bytes read from the special file, `/dev/urandom`.
 Now, suppose Dracula adds `mars.jpg` to his repository:
 
 ```bash
-$ git add mars.jpg
-$ git commit -m "Add picture of Martian surface"
+git add mars.jpg
+git commit -m "Add picture of Martian surface"
 ```
 
 ```output
@@ -364,7 +362,7 @@ His is a picture of the Martian sky, but it is *also* called `mars.jpg`.
 When Dracula tries to push, he gets a familiar message:
 
 ```bash
-$ git push origin main
+git push origin main
 ```
 
 ```output
@@ -381,7 +379,7 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 We've learned that we must pull first and resolve any conflicts:
 
 ```bash
-$ git pull origin main
+git pull origin main
 ```
 
 When there is a conflict on an image or other binary file, git prints
@@ -416,25 +414,25 @@ the version we want to keep. Then we can add and commit this version.
 On the key line above, Git has conveniently given us commit identifiers
 for the two versions of `mars.jpg`. Our version is `HEAD`, and Wolfman's
 version is `439dc8c0...`. If we want to use our version, we can use
-`git checkout`:
+`git restore`:
 
 ```bash
-$ git checkout HEAD mars.jpg
-$ git add mars.jpg
-$ git commit -m "Use image of surface instead of sky"
+git restore HEAD mars.jpg
+git add mars.jpg
+git commit -m "Use image of surface instead of sky"
 ```
 
 ```output
 [main 21032c3] Use image of surface instead of sky
 ```
 
-If instead we want to use Wolfman's version, we can use `git checkout` with
+If instead we want to use Wolfman's version, we can use `git restore` with
 Wolfman's commit identifier, `439dc8c0`:
 
 ```bash
-$ git checkout 439dc8c0 mars.jpg
-$ git add mars.jpg
-$ git commit -m "Use image of sky instead of surface"
+git restore 439dc8c0 mars.jpg
+git add mars.jpg
+git commit -m "Use image of sky instead of surface"
 ```
 
 ```output
@@ -447,19 +445,19 @@ and *rename* it, then add the renamed versions. First, check out each
 image and rename it:
 
 ```bash
-$ git checkout HEAD mars.jpg
-$ git mv mars.jpg mars-surface.jpg
-$ git checkout 439dc8c0 mars.jpg
-$ mv mars.jpg mars-sky.jpg
+git restore HEAD mars.jpg
+git mv mars.jpg mars-surface.jpg
+git restore 439dc8c0 mars.jpg
+mv mars.jpg mars-sky.jpg
 ```
 
 Then, remove the old `mars.jpg` and add the two new files:
 
 ```bash
-$ git rm mars.jpg
-$ git add mars-surface.jpg
-$ git add mars-sky.jpg
-$ git commit -m "Use two images: surface and sky"
+git rm mars.jpg
+git add mars-surface.jpg
+git add mars-sky.jpg
+git commit -m "Use two images: surface and sky"
 ```
 
 ```output
@@ -471,8 +469,6 @@ $ git commit -m "Use two images: surface and sky"
 
 Now both images of Mars are checked into the repository, and `mars.jpg`
 no longer exists.
-
-
 
 :::::::::::::::::::::::::
 
@@ -499,27 +495,27 @@ below. When you have the order right, see if you can write the corresponding
 commands in the *command* column. A few steps are populated to get you
 started.
 
-| order | action . . . . . . . . . . | command . . . . . . . . . .                   | 
+| order | action . . . . . . . . . . | command . . . . . . . . . .                   |
 | ----- | -------------------------- | --------------------------------------------- |
-| 1     |                            |                                               | 
-| 2     |                            | `echo 100 >> numbers.txt`                                              | 
-| 3     |                            |                                               | 
-| 4     |                            |                                               | 
-| 5     |                            |                                               | 
-| 6     | Celebrate!                 | `AFK`                                              | 
+| 1     |                            |                                               |
+| 2     |                            | `echo 100 >> numbers.txt`                                              |
+| 3     |                            |                                               |
+| 4     |                            |                                               |
+| 5     |                            |                                               |
+| 6     | Celebrate!                 | `AFK`                                              |
 
 :::::::::::::::  solution
 
 ## Solution
 
-| order | action . . . . . .         | command . . . . . . . . . . . . . . . . . . . | 
+| order | action . . . . . .         | command . . . . . . . . . . . . . . . . . . . |
 | ----- | -------------------------- | --------------------------------------------- |
-| 1     | Update local               | `git pull origin main`                                              | 
-| 2     | Make changes               | `echo 100 >> numbers.txt`                                              | 
-| 3     | Stage changes              | `git add numbers.txt`                                              | 
-| 4     | Commit changes             | `git commit -m "Add 100 to numbers.txt"`                                              | 
-| 5     | Update remote              | `git push origin main`                                              | 
-| 6     | Celebrate!                 | `AFK`                                              | 
+| 1     | Update local               | `git pull origin main`                                              |
+| 2     | Make changes               | `echo 100 >> numbers.txt`                                              |
+| 3     | Stage changes              | `git add numbers.txt`                                              |
+| 4     | Commit changes             | `git commit -m "Add 100 to numbers.txt"`                                              |
+| 5     | Update remote              | `git push origin main`                                              |
+| 6     | Celebrate!                 | `AFK`                                              |
 
 :::::::::::::::::::::::::
 
@@ -531,5 +527,4 @@ started.
 - The version control system does not allow people to overwrite each other's changes blindly, but highlights conflicts so that they can be resolved.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
 
